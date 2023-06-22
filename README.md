@@ -67,3 +67,10 @@ In Figure 6, the variation of the number of false negatives (the number of predi
 
 ![image](https://github.com/HuseyinOzdemir1/MinHash_Algorithm_for_Sales_Transactions/assets/75394581/023f401f-7d1a-4bf5-ba06-110d3cac010a)
 
+# References
+
+Broder, A. Z. (1997, June). On the resemblance and containment of documents. In IEEE Compression and Complexity of Sequences Proceedings (Cat. No. 97TB100171) (pp. 21-29).
+
+Wu, W., Li, B., Chen, L., Gao, J., and Zhang, C. (2020). A review for weighted MinHash algorithms. IEEE Transactions on Knowledge and Data Engineering, 34(6), 2553-2573.
+
+Ramos, G. (2018, November). E-commerce Business Transaction, Version 2. [https://www.kaggle.com/datasets/gabrielramos87/an-online-shop-business](https://www.kaggle.com/datasets/gabrielramos87/an-online-shop-business) 
