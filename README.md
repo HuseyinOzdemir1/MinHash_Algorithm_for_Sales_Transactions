@@ -43,27 +43,27 @@ For a determined number of hash functions at the beginning, the coefficients ai 
 
 In this study, different values between 5 and 30 were given to the number of hash functions and this process was repeated 10 times for each hash function. The results were evaluated according to the mean of the repeated solutions. In Figure 1, the graph of the average generation times of MinHash signatures according to the number of hash functions is given. As can be seen in the graph obtained, the time to create hash functions has increased gradually as the complexity of the process has increased.
 
-![image](https://github.com/HuseyinOzdemir1/MinHash_Algorithm_for_Sales_Transactions/assets/75394581/d0726ba5-7a36-4a4d-baed-9de577a3c734)
+![image](https://github.com/HuseyinOzdemir1/MinHash_Algorithm_for_Sales_Transactions/assets/75394581/ef1b9517-073b-4297-9b96-245fe7465dc3)
 
 Average calculation times of approximate Jaccard similarity for each number of hash functions are given in Figure 2. It took approximately 194.7329 seconds to calculate the true Jaccard similarity for all customer pairs. When the graph given in Figure 2 is examined, the calculation time of approximate Jaccard similarity varies between about 10 percent and 38 percent of the calculation time of the real Jaccard similarity according to the number of hash functions. Considering the hardware of the computer where the operation is performed, it can be said that the MinHash algorithm is very effective in the computation time.
 
-![image](https://github.com/HuseyinOzdemir1/MinHash_Algorithm_for_Sales_Transactions/assets/75394581/8b1ead26-6118-41af-b871-8865a45f508c)
+![image](https://github.com/HuseyinOzdemir1/MinHash_Algorithm_for_Sales_Transactions/assets/75394581/42abcbd1-71bc-4629-b841-8279d940730d)
 
 It is necessary to check whether the MinHash algorithm is created in effective times, as well as the accuracy of the approximate Jaccard similarities obtained. Therefore, the approximate Jaccard similarity calculated with the previously obtained real Jaccard similarity is compared for all customer pairs. During the comparison, customer pairs with values above 0.5 from approximate and actual values are considered to be similar customers. For this threshold value, the number of true positive, true negative, false positive and false negative was calculated according to the number of hash functions.
 
 In Figure 3, the variation of the number of true positives (the number of those estimated to be similar when the products are actually similar) and the number of hash functions is given. Considering the results of the graph obtained, the number of true positives increased with the increase in the number of hash functions. The reason for this is that the MinHash algorithm better represents the real data set thanks to the increase in the number of hashes. In real Jaccard similarities, the number of similar client pairs that exceed the threshold is 309, and the number of client pairs that exceed the threshold in the maximum number of hashes and are actually similar is 270.
 
-![image](https://github.com/HuseyinOzdemir1/MinHash_Algorithm_for_Sales_Transactions/assets/75394581/b377f849-38d3-4c8f-9c33-c090276fcd90)
+![image](https://github.com/HuseyinOzdemir1/MinHash_Algorithm_for_Sales_Transactions/assets/75394581/84db499b-90dc-40be-820c-b45da3a38755)
 
 In Figure 4, the variation of the number of true negatives (the number of those predicted as not similar when the products are actually not similar) and the number of hash functions is given. In real Jaccard similarity, the number of dissimilar client pairs below the threshold is 11226382, and the number of customer pairs that fall below the threshold in the maximum number of hashes and are actually dissimilar is 11226195. Looking at the graph, it can be said that the true negative number is successful in converging to its true value.
 
-![image](https://github.com/HuseyinOzdemir1/MinHash_Algorithm_for_Sales_Transactions/assets/75394581/f27dcb66-a41e-4b9b-bf84-ac856015f29f)
+![image](https://github.com/HuseyinOzdemir1/MinHash_Algorithm_for_Sales_Transactions/assets/75394581/3e1df303-de92-4f83-8072-c4a49d1bfd53)
 
 In Figure 5, the variation of the number of false positives (the number of those predicted to be similar when the products are not actually similar) and the number of hash functions is given. The number of customer pairs that exceed the threshold in the maximum number of hashes and are actually dissimilar is 187. The calculated approximate Jaccard similarity of these client pairs usually ranges from 0.5 to 0.6. The number of false positives can be reduced by increasing the number of hash functions or by creating hash functions that better represent the data set. Looking at the graph, it can be said that with increasing the number of hash functions, the number of false positives gradually converges to zero.
 
-![image](https://github.com/HuseyinOzdemir1/MinHash_Algorithm_for_Sales_Transactions/assets/75394581/641c1cbd-d3cf-44fa-b974-fa8f925ea041)
+![image](https://github.com/HuseyinOzdemir1/MinHash_Algorithm_for_Sales_Transactions/assets/75394581/a9482bc8-7cd1-4e6a-aefc-5d95dc493366)
 
 In Figure 6, the variation of the number of false negatives (the number of predicted products as being similar but not similar) with the number of hash functions is given. Looking at the graph, it can be said that the number of false negatives gradually converges to zero with increasing the number of hash functions. The number of false negatives can be reduced by increasing the number of hash functions, as in the number of false positives, or by creating hash functions to better represent the data set.
 
-![image](https://github.com/HuseyinOzdemir1/MinHash_Algorithm_for_Sales_Transactions/assets/75394581/9f21caef-b456-4414-ab58-2e9a10ca89df)
+![image](https://github.com/HuseyinOzdemir1/MinHash_Algorithm_for_Sales_Transactions/assets/75394581/023f401f-7d1a-4bf5-ba06-110d3cac010a)
 
