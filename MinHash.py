@@ -200,7 +200,7 @@ threshold = 0.5
 for i in range(0, size):  
   for j in range(i + 1, size):
       
-      # True Positive ve False Positive sayılarının bulunması
+      # Finding True Positive and False Positive numbers
       if JaccardMinHash[i][j] >= threshold and Jsims[i][j] >= threshold:
         tp = tp + 1
       elif JaccardMinHash[i][j] < threshold and Jsims[i][j] < threshold:
