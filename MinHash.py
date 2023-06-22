@@ -17,8 +17,8 @@ for i in range(len(Customers)):
         
     CustomerSet.setdefault(str(Customers[i]),[]).append(Products[i])
 
-# Deleting space-consuming variables
-del Customers
+# Finding unique customers
+Customers = Customers.unique()
   
 # Deleting duplicates of each product
 Products = df["ProductName"].unique()
@@ -46,23 +46,26 @@ for custom in CustomerSet:
 # Deleting space-consuming variables
 del custom,item,ProductID,setID,Products
 
+# Calculating the real Jaccard similarities
+t0 = time.time()
+print("Calculating the real Jaccard similarities...")
 
-# Calling previously obtained real Jaccard similarities
-size = len(CustomerSetID)
+Jsims = {}
+for i in range(len(Customers)):
 
-Jsims = np.zeros((size,size))
+    custom1 = CustomerSetID[str(Customers[i])] # First customer as set
 
-with open("ActualJaccard.txt", "r") as f:
-    
-    for i in range(len(CustomerSet)):
+    for j in range(i+1,len(Customers)):
         
-        Jsim = f.readline().split(" ")
-    
-        for j in range(len(Jsim)):
-            
-            Jsims[i][j] = float(Jsim[j])
-            
-del f,i,j,Jsim
+        custom2 = CustomerSetID[str(Customers[j])] # Second customer as set
+
+        """
+        We need to define 2d array as 1d array.
+        To do this, unique indexes can be created to represent each of the 2d array indexes.
+        """
+        Jsims[(i-1)*(len(Customers)-i/2) + j - i] = len(custom1.intersection(custom2)) / len(custom1.union(custom2))
+
+print("It took {:.4f} seconds to calculate the real Jaccard Similarities" .format(time.time() - t0))
 
 # A function that generates the necessary coefficients for hash functions to be randomly generated
 # Function that ensures that the coefficient A is odd
@@ -83,7 +86,7 @@ def randomCoeffA(k,prime):
     k = k - 1
     
   return randomList
- 
+
 # A function that generates the necessary coefficients for hash functions to be randomly generated
 # Randomly generated B coefficient between 0 and prime
 def randomCoeffB(k,prime):
@@ -119,7 +122,7 @@ print("Generating random hash functions...")
 # List of coefficients a and b required for the hash function
 coeffA = randomCoeffA(numHashes, prime)
 coeffB = randomCoeffB(numHashes, prime)
- 
+
 print("Generating MinHash signatures of customers...")
 
 # A list where the signature matrices to be created with hash functions will be kept.
@@ -154,11 +157,10 @@ for customer in CustomerSetID.keys():
     # Collection of signature matrix of each customer
     signatures.append(signature)
 
-print("It took .4f seconds to generate customers' MinHash signatures." % (time.time() - t0))
+print("It took {:.4f} seconds to generate customers' MinHash signatures." .format(time.time() - t0))
 
 # Deleting space-consuming variables 
 del signature,hashValue,hash,productID,i,productSet,t0,prime,customer,coeffA,coeffB
- 
 
 t0 = time.time()
 
@@ -166,9 +168,7 @@ print("Calculating customers' Jaccard similarity...")
 size = len(signatures)
 
 # Matrix to keep calculated Jaccard similarities
-JaccardMinHash = np.zeros((size,size))
-# The diagonal of the matrix is 1 because it represents the same customers.
-np.fill_diagonal(JaccardMinHash, 1)
+JaccardMinHash = {}
 
 for i in range(0, size):
   # i. customer's MinHash signature
@@ -186,10 +186,10 @@ for i in range(0, size):
       count = count + (signature1[k] == signature2[k])
     
     # Approximate Jaccard similarities
-    JaccardMinHash[i][j] = (count / numHashes)
+    JaccardMinHash[(i-1)*(len(Customers)-i/2) + j - i] = count / numHashes
 
-print("It took .4f seconds to calculate customers' Jaccard similarity." % (time.time() - t0))
- 
+print("It took {:.4f} seconds to calculate customers' Jaccard similarity." .format(time.time() - t0))
+
 # Comparison of calculated MinHash similarities with real Jaccard similarities
 tp = 0
 fn = 0
@@ -197,15 +197,16 @@ tn = 0
 fp = 0
 
 threshold = 0.5
-for i in range(0, size):  
+for i in range(size):  
   for j in range(i + 1, size):
       
+      k = (i-1)*(len(Customers)-i/2) + j - i
       # Finding True Positive and False Positive numbers
-      if JaccardMinHash[i][j] >= threshold and Jsims[i][j] >= threshold:
+      if JaccardMinHash[k] >= threshold and Jsims[k] >= threshold:
         tp = tp + 1
-      elif JaccardMinHash[i][j] < threshold and Jsims[i][j] < threshold:
+      elif JaccardMinHash[k] < threshold and Jsims[k] < threshold:
         tn = tn + 1
-      elif JaccardMinHash[i][j] >= threshold and Jsims[i][j] < threshold:
+      elif JaccardMinHash[k] >= threshold and Jsims[k] < threshold:
         fp = fp + 1
       else:
         fn = fn + 1
@@ -216,5 +217,3 @@ print("False Positive: {} ".format(fp))
 print("False Negative: {} ".format(fn))
 
 del i,j,k,size,numHashes,tp,tn,fp,fn,signatures,signature1,signature2,threshold,t0,count
-
-
