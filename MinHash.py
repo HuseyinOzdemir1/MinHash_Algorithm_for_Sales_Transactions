@@ -70,18 +70,18 @@ print("It took {:.4f} seconds to calculate the real Jaccard Similarities" .forma
 # A function that generates the necessary coefficients for hash functions to be randomly generated
 # Function that ensures that the coefficient A is odd
 def randomCoeffA(k,prime):
-  # 'k' rasgele değerlerin için bir list
+  # A list for 'k' random values
   randomList = []
   
   while k > 0:
-    # Rastgele bir sayı üretme işlemi
+    # The process of generating a random number
     randomIndex = random.randrange(1, prime,2) 
 
-    # Rastgele üretilen katsayının listede olup olmadığının kontrol edilmesi
+    # Checking if the randomly generated coefficient is in the list
     while randomIndex in randomList:
       randomIndex = random.randrange(1, prime,2) 
     
-    # Rastgele elde edilen katsayının listeye eklenmesi
+    # Adding the randomly obtained coefficient to the list
     randomList.append(randomIndex)
     k = k - 1
     
